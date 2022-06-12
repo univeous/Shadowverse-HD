@@ -25,11 +25,15 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
+      - name: Write secrets
+        run: |
+          mkdir ~/googleplay
+          echo "{\n\t'AndroidID':${{ secrets.DEVICE_ID }}\n}" > ~/googleplay/arm64.json
+          cat ~/googleplay/arm64.json
+
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: |
-          echo "{\n\t'AndroidID':${{ secrets.DEVICE_ID }}\n}" > ~/googleplay/arm64.json
-          cat ~/googleplay/arm64.json
           chmod +x ./googleplay
           ./googleplay
 
