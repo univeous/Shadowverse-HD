@@ -69,6 +69,7 @@ jobs:
           sed -i 's/android:maxAspectRatio="2.1"/android:maxAspectRatio="2.4"/' original/AndroidManifest.xml
           sed -i 's/"android.max_aspect" android:value="2.1"/"android.max_aspect" android:value="2.4"/' original/AndroidManifest.xml
           xxd original/lib/arm64-v8a/libil2cpp.so | sed 's/4218 201e 4008 201e 4108 211e/1f20 03d5 1f20 03d5 1f20 03d5/' | xxd -r > original/lib/arm64-v8a/libil2cpp.so
+          echo $(size original/lib/arm64-v8a/libil2cpp.so)
           
       - name: "recompile apk"
         if: env.new_version
