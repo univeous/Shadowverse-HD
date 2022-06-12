@@ -21,7 +21,7 @@ jobs:
 
       - name: ll
         run: |
-          ll
+          ls -l
           
       - uses: ./.github/workflows/write_secrets.yml
 
