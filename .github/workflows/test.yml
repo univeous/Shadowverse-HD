@@ -28,19 +28,21 @@ jobs:
       - name: Write secrets
         env:
           ANDROID_ID: ${{ secrets.ANDROID_ID }}
+          TOKEN: ${{ secrets.TOKEN }}
         run: |
           mkdir ~/googleplay
           echo "{\n\t\"AndroidID\":$ANDROID_ID\n}" > ~/googleplay/arm64.json
-          cat ~/googleplay/arm64.json
+          echo "{\n\t\"Token\":$TOKEN\n}" > ~/googleplay/token.json
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: |
           chmod +x ./googleplay
-          ./googleplay
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          ./googleplay -a com.cygames.Shadowverse  -arm64 -v 164 -s
+          ls
+          
+      - name: Upload output file
+        uses: actions/upload-artifact@v3
+        with:
+          name: Shadowverse-164
+          path: com.cygames.Shadowverse-164.apk
