@@ -31,6 +31,8 @@ jobs:
       # Runs a single command using the runners shell
       - name: check version
         run: |
+          chmod +x ./googleplay
           store_version=$(./googleplay -a com.cygames.Shadowverse  -arm64  | grep "VersionCode")
+          version=$(echo version)
           echo $store_version
-          
+          echo $version
