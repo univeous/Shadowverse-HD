@@ -35,9 +35,9 @@ jobs:
           info=$(./googleplay -a com.cygames.Shadowverse -p 2)
           version_string=$(echo $info | grep "VersionString")
           store_version=$(echo $info | grep "VersionCode")
-          echo $info
-          echo $version_string
-          echo $store_version
+          
+          echo $(echo $info | grep "VersionCode")
+      
           version=$(cat version)
           if [[ $store_version > $version ]]; then
             echo "new_version=true" >> $GITHUB_ENV
