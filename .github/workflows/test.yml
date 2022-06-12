@@ -31,8 +31,8 @@ jobs:
           TOKEN: ${{ secrets.TOKEN }}
         run: |
           mkdir ~/googleplay
-          echo "{\"AndroidID\":$ANDROID_ID}" > ~/googleplay/arm64.json
-          echo "{\"Token\":$TOKEN}" > ~/googleplay/token.json
+          echo "{\"AndroidID\": $ANDROID_ID}" > ~/googleplay/arm64.json
+          echo "{\"Token\": \"$TOKEN\"}" > ~/googleplay/token.json
           cat ~/googleplay/arm64.json
           cat ~/googleplay/token.json
 
