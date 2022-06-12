@@ -1,10 +1,10 @@
-name: VersionCheck
+name: Process
 
 on:
   workflow_dispatch:
 
 jobs:
-  version_check:
+  Process:
     runs-on: ubuntu-latest
 
     steps:
