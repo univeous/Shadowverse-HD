@@ -27,10 +27,10 @@ jobs:
       
       - name: Write secrets
         env:
-          DEVICE_ID: ${{ secrets.DEVICE_ID }}
+          ANDROID_ID: ${{ secrets.ANDROID_ID }}
         run: |
           mkdir ~/googleplay
-          echo "{\n\t\"AndroidID\":$DEVICE_ID\n}" > ~/googleplay/arm64.json
+          echo "{\n\t\"AndroidID\":$ANDROID_ID\n}" > ~/googleplay/arm64.json
           cat ~/googleplay/arm64.json
 
       # Runs a single command using the runners shell
