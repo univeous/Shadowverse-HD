@@ -36,17 +36,15 @@ jobs:
           version=$(cat version)
           if [[ $store_version > $version ]]; then
             echo "new_version=true" >> $GITHUB_ENV
-            echo "version=$store_version" >> $GITHUB_ENV
+            echo "version=$(echo ${store_version##* })" >> $GITHUB_ENV
           else
             echo "new_version=false" >> $GITHUB_ENV
           fi
 
       - name: "download new apk"
         if: env.new_version
-        env:
-          version: ${{ env.version }}
         run: |
-          ./googleplay -a com.cygames.Shadowverse  -p 2 -v $(echo ${version##* }) -s
+          ./googleplay -a com.cygames.Shadowverse  -p 2 -v ${{ env.version }} -s
 
       - name: "upload"
         uses: actions/upload-artifact@v3
@@ -54,5 +52,5 @@ jobs:
           version: ${{ env.version }}
         with:
           name: Shadowverse-164
-          path: com.cygames.Shadowverse-$(echo ${version##* }).apk
+          path: com.cygames.Shadowverse-${{ env.version }}.apk
           
