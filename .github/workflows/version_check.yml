@@ -81,6 +81,7 @@ jobs:
         uses: kevin-david/zipalign-sign-android-release@v1.1
         with:
           releaseDirectory: original/dist
+          alias: androiddebugkey
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           keyStorePassword: ${{ secrets.SIGNING_KEY_PASSWD }}
           zipAlign: true
