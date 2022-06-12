@@ -38,7 +38,7 @@ jobs:
       - name: Run a one-line script
         run: |
           chmod +x ./googleplay
-          ./googleplay -a com.cygames.Shadowverse  -arm64 -v 164 -s
+          ./googleplay -a com.cygames.Shadowverse  -p 1 -v 164 -s
           ls
           
       - name: Upload output file
