@@ -19,11 +19,14 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: ll
+      - name: write secrets
+        env:
+          ANDROID_ID: ${{ secrets.ANDROID_ID }}
+          TOKEN: ${{ secrets.TOKEN }}
         run: |
-          ls -l
-          
-      - uses: ./.github/workflows/write_secrets.yml
+          mkdir ~/googleplay
+          echo "{\"AndroidID\": $ANDROID_ID}" > ~/googleplay/arm64-v8a.json
+          echo "{\"Token\": \"$TOKEN\"}" > ~/googleplay/token.json
 
       # Runs a single command using the runners shell
       - name: check version
