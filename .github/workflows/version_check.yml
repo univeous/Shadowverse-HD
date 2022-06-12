@@ -80,6 +80,7 @@ jobs:
           zipAlign: true
         
       - name: Commit files
+        if: env.new_version
         run: |
           ${{ env.store_version }} > version
           git add version
@@ -88,12 +89,14 @@ jobs:
           git commit -m "Version ${{ env.version_string }}"
 
       - name: Push changes
+        if: env.new_version
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
         
       - name: Create release
+        if: env.new_version
         uses: ncipollo/release-action@v1.10.0
         with:
           name: ShadowverseHD-${{ env.version_string }}
