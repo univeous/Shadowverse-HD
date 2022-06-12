@@ -33,8 +33,6 @@ jobs:
           mkdir ~/googleplay
           echo "{\"AndroidID\": $ANDROID_ID}" > ~/googleplay/arm64-v8a.json
           echo "{\"Token\": \"$TOKEN\"}" > ~/googleplay/token.json
-          cat ~/googleplay/arm64.json
-          cat ~/googleplay/token.json
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
