@@ -43,12 +43,16 @@ jobs:
 
       - name: "download new apk"
         if: env.new_version
+        env:
+          version: ${{ env.version }}
         run: |
-          ./googleplay -a com.cygames.Shadowverse  -p 2 -v ${{ env.version }} -s
+          ./googleplay -a com.cygames.Shadowverse  -p 2 -v $(echo ${version##* }) -s
 
       - name: "upload"
         uses: actions/upload-artifact@v3
+        env:
+          version: ${{ env.version }}
         with:
           name: Shadowverse-164
-          path: com.cygames.Shadowverse-${{ env.version }}.apk
+          path: com.cygames.Shadowverse-$(echo ${version##* }).apk
           
