@@ -1,5 +1,5 @@
 <div align="center">
-    <img width="320" src="pics/logo.png" alt="logo">
+    <img width="160" src="pics/logo.png" alt="logo">
   <h1>Shadowverse HD</h1>
 </div>
 
