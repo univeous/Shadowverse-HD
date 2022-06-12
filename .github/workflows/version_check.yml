@@ -33,6 +33,6 @@ jobs:
         run: |
           chmod +x ./googleplay
           store_version=$(./googleplay -a com.cygames.Shadowverse -p 2 | grep "VersionCode")
-          version=$(echo version)
+          version=$(cat version)
           echo $store_version
           echo $version
