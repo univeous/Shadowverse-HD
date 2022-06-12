@@ -34,7 +34,7 @@ jobs:
           chmod +x ./googleplay
           store_version=$(./googleplay -a com.cygames.Shadowverse -p 2 | grep "VersionCode")
           version=$(cat version)
-          if [[ $store_version > version ]]; then
+          if [[ $store_version > $version ]]; then
             echo true
           else
             echo false
