@@ -90,7 +90,8 @@ jobs:
         uses: ncipollo/release-action@v1.10.0
         with:
           name: ShadowverseHD-${{ env.version_string }}
-          artifact: original/dist/Shadowverse-${{ env.version_string }}-signed.apk
+          artifacts: original/dist/Shadowverse-${{ env.version_string }}-signed.apk
+          tag: ${{ env.version_string }}
           
         
       - name: "upload"
