@@ -1,22 +1,13 @@
-# This is a basic workflow to help you get started with Actions
-
 name: VersionCheck
 
-# Controls when the workflow will run
 on:
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   version_check:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
       - name: write secrets
@@ -28,7 +19,6 @@ jobs:
           echo "{\"AndroidID\": $ANDROID_ID}" > ~/googleplay/arm64-v8a.json
           echo "{\"Token\": \"$TOKEN\"}" > ~/googleplay/token.json
 
-      # Runs a single command using the runners shell
       - name: check version
         run: |
           chmod +x ./googleplay
@@ -70,7 +60,7 @@ jobs:
           
           sed -i 's/"android.max_aspect" android:value="2.1"/"android.max_aspect" android:value="2.4"/' original/AndroidManifest.xml
           
-          xxd original/lib/arm64-v8a/libil2cpp.so | sed 's/4218 201e 4008 201e 4108 211e/1f20 03d5 1f20 03d5 1f20 03d5/' | xxd -r > original/lib/arm64-v8a/libil2cpp.so
+          (xxd original/lib/arm64-v8a/libil2cpp.so | sed 's/4218 201e 4008 201e 4108 211e/1f20 03d5 1f20 03d5 1f20 03d5/' | xxd -r > original/lib/arm64-v8a/libil2cpp.so)
           
           echo $(size original/lib/arm64-v8a/libil2cpp.so)
           
@@ -96,13 +86,3 @@ jobs:
           name: ShadowverseHD-${{ env.version_string }}
           artifacts: original/dist/Shadowverse-${{ env.version_string }}-signed.apk
           tag: ${{ env.version_string }}
-          
-        
-      - name: "upload"
-        uses: actions/upload-artifact@v3
-        env:
-          version: ${{ env.version }}
-        with:
-          name: Shadowverse-${{ env.version_string }}
-          path: original/dist/Shadowverse-${{ env.version_string }}-signed.apk
-          
