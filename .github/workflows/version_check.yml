@@ -32,11 +32,14 @@ jobs:
       - name: check version
         run: |
           chmod +x ./googleplay
-          store_version=$(./googleplay -a com.cygames.Shadowverse -p 2 | grep "VersionCode")
+          info=$(./googleplay -a com.cygames.Shadowverse -p 2)
+          version_string=$(echo $info | grep "VersionString")
+          store_version=$(echo $info | grep "VersionCode")
           version=$(cat version)
           if [[ $store_version > $version ]]; then
             echo "new_version=true" >> $GITHUB_ENV
             echo "store_version=$store_version" >> $GITHUB_ENV
+            echo "version_string=$(echo ${version_string##* })" >> $GITHUB_ENV
             echo "version=$(echo ${store_version##* })" >> $GITHUB_ENV
           else
             echo "new_version=false" >> $GITHUB_ENV
@@ -46,7 +49,16 @@ jobs:
         if: env.new_version
         run: |
           ./googleplay -a com.cygames.Shadowverse  -p 2 -v ${{ env.version }} -s
-
+      
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.3.0
+        
+      - name: "decode apk"
+        if: env.new_version
+        run: |
+          java -jar ./apktool_2.6.1.jar d *.apk
+          ls
+        
       - name: "upload"
         uses: actions/upload-artifact@v3
         env:
