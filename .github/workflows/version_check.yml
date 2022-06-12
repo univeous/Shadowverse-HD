@@ -75,7 +75,7 @@ jobs:
         if: env.new_version
         run: |
           java -jar ./apktool_2.6.1.jar b --use-aapt2 original
-          mv original/dist/original.apk Shadowverse-${{ env.version_string }}.apk
+          mv original/dist/original.apk original/dist/Shadowverse-${{ env.version_string }}.apk
 
       - name: "zipalign and sign apk"
         if: env.new_version
