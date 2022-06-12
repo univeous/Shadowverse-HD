@@ -28,7 +28,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: |
-          ls
+          chmod +x ./googleplay
           ./googleplay
 
       # Runs a set of commands using the runners shell
