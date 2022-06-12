@@ -93,5 +93,5 @@ jobs:
           version: ${{ env.version }}
         with:
           name: Shadowverse-${{ env.version_string }}
-          path: original/dist/Shadowverse-${{ env.version_string }}.apk
+          path: original/dist/Shadowverse-${{ env.version_string }}-signed.apk
           
