@@ -57,7 +57,7 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
         
-      - name: "decode apk"
+      - name: "decompile apk"
         if: env.new_version
         run: |
           mv *.apk original.apk
@@ -75,13 +75,14 @@ jobs:
         if: env.new_version
         run: |
           java -jar ./apktool_2.6.1.jar b --use-aapt2 original
+          mv original/dist/original.apk Shadowverse-${{ env.version_string }}.apk
 
       - name: "zipalign and sign apk"
         if: env.new_version
         uses: kevin-david/zipalign-sign-android-release@v1.1
         with:
           releaseDirectory: original/dist
-          alias: androiddebugkey
+          alias: ${{ secrets.SIGNING_KEY_ALIAS }}
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           keyStorePassword: ${{ secrets.SIGNING_KEY_PASSWD }}
           zipAlign: true
@@ -92,5 +93,5 @@ jobs:
           version: ${{ env.version }}
         with:
           name: Shadowverse-${{ env.version_string }}
-          path: original/dist/original.apk
+          path: original/dist/Shadowverse-${{ env.version_string }}.apk
           
