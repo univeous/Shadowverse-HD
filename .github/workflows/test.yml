@@ -34,8 +34,7 @@ jobs:
           echo "{\"AndroidID\": $ANDROID_ID}" > ~/googleplay/arm64-v8a.json
           echo "{\"Token\": \"$TOKEN\"}" > ~/googleplay/token.json
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
+      - name: Download apk
         run: |
           chmod +x ./googleplay
           ./googleplay -a com.cygames.Shadowverse  -p 2 -v 164 -s
@@ -45,4 +44,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Shadowverse-164
-          path: ~/googleplay/com.cygames.Shadowverse-164.apk
+          path: com.cygames.Shadowverse-164.apk
