@@ -36,6 +36,7 @@ jobs:
           version=$(cat version)
           if [[ $store_version > $version ]]; then
             echo "new_version=true" >> $GITHUB_ENV
+            echo "store_version=$store_version" >> $GITHUB_ENV
             echo "version=$(echo ${store_version##* })" >> $GITHUB_ENV
           else
             echo "new_version=false" >> $GITHUB_ENV
