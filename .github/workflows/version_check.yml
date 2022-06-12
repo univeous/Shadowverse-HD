@@ -85,7 +85,7 @@ jobs:
           git add version
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git commit -m "Version ${{ version_string }}"
+          git commit -m "Version ${{ env.version_string }}"
 
       - name: Push changes
         uses: ad-m/github-push-action@master
