@@ -53,6 +53,9 @@ jobs:
       
       - name: Setup Java JDK
         uses: actions/setup-java@v3.3.0
+        with:
+          distribution: 'temurin'
+          java-version: '17'
         
       - name: "decode apk"
         if: env.new_version
