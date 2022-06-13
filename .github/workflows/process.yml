@@ -2,7 +2,7 @@ name: Process
 
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "*/30 0-13 * * *"
   workflow_dispatch:
 
 jobs:
@@ -37,6 +37,10 @@ jobs:
           else
             echo "new_version=false" >> $GITHUB_ENV
           fi
+
+      - name: Cancel if no new version
+        if: env.new_version != true
+        uses: andymckay/cancel-action@0.2
 
       - name: Download new apk
         if: env.new_version == true
