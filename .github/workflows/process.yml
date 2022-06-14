@@ -25,6 +25,7 @@ jobs:
         run: |
           chmod +x ./googleplay
           info=$(./googleplay -a com.cygames.Shadowverse -p 2)
+          echo "$info"
           version_string=$(echo "$info" | grep "VersionString")
           store_version=$(echo "$info" | grep "VersionCode")
                 
