@@ -28,9 +28,15 @@ jobs:
           echo "$info"
           version_string=$(echo "$info" | grep "VersionString")
           store_version=$(echo "$info" | grep "VersionCode")
-                
+          
           version=$(cat version)
+          echo "current version:"
+          echo "$version"
+          echo "current playstore version:"
+          echo "$store_version"
+          
           if [[ $store_version > $version ]]; then
+            echo "New version $version_string found."
             echo "new_version=true" >> $GITHUB_ENV
             echo "store_version=$store_version" >> $GITHUB_ENV
             echo "version_string=$(echo ${version_string##* })" >> $GITHUB_ENV
