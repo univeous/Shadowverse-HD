@@ -46,7 +46,7 @@ jobs:
           fi
 
       - name: Cancel if no new version
-        if: ${{ env.new_version != 'false' }}
+        if: ${{ env.new_version == 'false' }}
         uses: andymckay/cancel-action@0.2
 
       - name: Download new apk
