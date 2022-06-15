@@ -44,6 +44,8 @@ jobs:
           else
             echo "new_version=false" >> $GITHUB_ENV
           fi
+          
+          echo "$new_version"
 
       - name: Cancel if no new version
         if: env.new_version != true
