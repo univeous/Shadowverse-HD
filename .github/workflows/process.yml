@@ -50,25 +50,25 @@ jobs:
         uses: andymckay/cancel-action@0.2
 
       - name: Download new apk
-        if: env.new_version == true
+        # if: env.new_version == true
         run: |
           ./googleplay -a com.cygames.Shadowverse  -p 2 -v ${{ env.version }} -s
       
       - name: Setup Java JDK
-        if: env.new_version == true
+        # if: env.new_version == true
         uses: actions/setup-java@v3.3.0
         with:
           distribution: 'temurin'
           java-version: '17'
         
       - name: Decompile apk
-        if: env.new_version == true
+        # if: env.new_version == true
         run: |
           mv *.apk original.apk
           java -jar ./apktool_2.6.1.jar d original.apk
       
       - name: Process apk
-        if: env.new_version == true
+        # if: env.new_version == true
         run: |
           sed -i 's/android:maxAspectRatio="2.1"/android:maxAspectRatio="2.4"/' original/AndroidManifest.xml
           sed -i 's/"android.max_aspect" android:value="2.1"/"android.max_aspect" android:value="2.4"/' original/AndroidManifest.xml
@@ -77,13 +77,13 @@ jobs:
           mv original/lib/arm64-v8a/libil2cpp2.so original/lib/arm64-v8a/libil2cpp.so
 
       - name: Recompile apk
-        if: env.new_version == true
+        # if: env.new_version == true
         run: |
           java -jar ./apktool_2.6.1.jar b --use-aapt2 original
           mv original/dist/original.apk original/dist/Shadowverse-${{ env.version_string }}.apk
 
       - name: Zipalign and sign apk
-        if: env.new_version == true
+        # if: env.new_version == true
         uses: kevin-david/zipalign-sign-android-release@v1.1
         with:
           releaseDirectory: original/dist
@@ -93,7 +93,7 @@ jobs:
           zipAlign: true
         
       - name: Commit files
-        if: env.new_version == true
+        # if: env.new_version == true
         run: |
           echo ${{ env.store_version }} > version
           git add version
@@ -102,14 +102,14 @@ jobs:
           git commit -m "Version ${{ env.version_string }}"
 
       - name: Push changes
-        if: env.new_version == true
+        # if: env.new_version == true
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
         
       - name: Create release
-        if: env.new_version == true
+        # if: env.new_version == true
         uses: ncipollo/release-action@v1.10.0
         with:
           name: ShadowverseHD-${{ env.version_string }}
