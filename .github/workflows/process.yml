@@ -115,4 +115,4 @@ jobs:
           name: ShadowverseHD-${{ env.version_string }}
           artifacts: original/dist/Shadowverse-${{ env.version_string }}-signed.apk
           tag: ${{ env.version_string }}
-          body: "Version ${{ env.version_string }}.\n（可能）加速下载链接：\nhttps://download.shadowverse-hd.workers.dev/https://github.com/univeous/Shadowverse-HD/releases/download/${{ env.version_string }}/Shadowverse-${{ env.version_string }}-signed.apk"
+          body: "Version ${{ env.version_string }}.\n（可能）加速下载链接：\nhttps://gh-proxy.uuio.workers.dev/https://github.com/univeous/Shadowverse-HD/releases/download/${{ env.version_string }}/Shadowverse-${{ env.version_string }}-signed.apk"
