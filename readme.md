@@ -7,7 +7,7 @@
 
 [影之诗](https://shadowverse.com/)非官方安卓客户端。解除了原版的分辨率限制，并对全面屏进行适配。
 
-新版本发布时，（如果不出意外）在playstore官方版本更新后的30分钟内，本项目会自动进行更新适配。
+新版本发布时，（如果不出意外）在 Playstore 官方版本更新后的30分钟内，本项目会自动进行更新适配。
 
 官方客户端:
 ![image](pics/before.jpg)
@@ -16,7 +16,7 @@
 ![image](pics/after.jpg)
 
 ## 免责声明
-Shadowverse和Shadowverse logo是Cygames的商标。
+Shadowverse 是 Cygames, Inc. 的注册商标。
 
 本项目在官方客户端的基础上修改而成。我们不对使用本项目提供的客户端所造成的任何问题/后果负责。
 
