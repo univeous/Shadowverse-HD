@@ -72,7 +72,7 @@ jobs:
         run: |
           sed -i 's/android:maxAspectRatio="2.1"/android:maxAspectRatio="2.4"/' original/AndroidManifest.xml
           sed -i 's/"android.max_aspect" android:value="2.1"/"android.max_aspect" android:value="2.4"/' original/AndroidManifest.xml
-          xxd -p -c 1000000 original/lib/arm64-v8a/libil2cpp.so | sed 's/4218 201e 0204 4139 4008 201e 4108 211e/1f20 03d5 0204 4139 1f20 03d5 1f20 03d5/' | xxd -r -p -c 1000000 > original/lib/arm64-v8a/libil2cpp2.so
+          xxd -p -c 1000000 original/lib/arm64-v8a/libil2cpp.so | sed 's/4218201e020441394008201e4108211e/1f2003d5020441391f2003d51f2003d5/' | xxd -r -p -c 1000000 > original/lib/arm64-v8a/libil2cpp2.so
           rm original/lib/arm64-v8a/libil2cpp.so
           mv original/lib/arm64-v8a/libil2cpp2.so original/lib/arm64-v8a/libil2cpp.so
 
