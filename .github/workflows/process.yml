@@ -92,6 +92,13 @@ jobs:
           keyStorePassword: ${{ secrets.SIGNING_KEY_PASSWD }}
           zipAlign: true
         
+      - name: Upload artifact
+        if: ${{ env.new_version == 'true' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: Shadowverse-${{ env.version_string }}-signed.apk
+          path: original/dist/Shadowverse-${{ env.version_string }}-signed.apk
+        
       - name: Commit files
         if: ${{ env.new_version == 'true' }}
         run: |
