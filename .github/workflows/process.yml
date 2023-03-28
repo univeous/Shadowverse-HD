@@ -122,4 +122,4 @@ jobs:
           name: ShadowverseHD-${{ env.version_string }}
           artifacts: original/dist/Shadowverse-${{ env.version_string }}-signed.apk
           tag: ${{ env.version_string }}
-          body: "Version ${{ env.version_string }}.\n[加速下载链接](https://download.fastgit.org/univeous/Shadowverse-HD/releases/download/${{ env.version_string }}/Shadowverse-${{ env.version_string }}-signed.apk)\n由于异形屏版本对客户端改动较大，可能会增加不必要的风险，异形屏版本暂时停止更新。非异形屏版本将会继续更新。如果有好的建议可以发issue。"
+          body: "Version ${{ env.version_string }}."
