@@ -3,7 +3,7 @@
   <h1>Shadowverse HD</h1>
 </div>
 
-[English](readme.md)
+[English](readme_en.md)
 
 [影之诗](https://shadowverse.com/)非官方安卓客户端。解除了原版的分辨率限制，并对全面屏进行适配。
 
