@@ -4,6 +4,19 @@ on:
   schedule:
     - cron: "*/30 0-13 * * *"
   workflow_dispatch:
+    inputs:
+      apk_url:
+        description: 'APK 直链 (留空则从 Google Play 下载)'
+        required: false
+        default: ''
+      version_name:
+        description: '手动输入版本号 (例如: 4.6.2)'
+        required: false
+        default: 'manual'
+      version_code:
+        description: '手动输入 VersionCode (例如: 210)'
+        required: false
+        default: '0'
 
 jobs:
   Process:
@@ -21,7 +34,9 @@ jobs:
           echo "{\"AndroidID\": $ANDROID_ID}" > ~/googleplay/arm64-v8a.json
           echo "{\"Token\": \"$TOKEN\"}" > ~/googleplay/token.json
 
-      - name: Check version
+      - name: Check version (Google Play Mode)
+        # 只有在没有手动输入直链时才执行
+        if: ${{ github.event.inputs.apk_url == '' }}
         run: |
           chmod +x ./googleplay
           info=$(./googleplay -a com.cygames.Shadowverse -p 2)
@@ -45,15 +60,30 @@ jobs:
             echo "new_version=false" >> $GITHUB_ENV
           fi
 
+      - name: Set Manual Version (Manual Mode)
+        # 如果提供了直链，手动设置环境变量
+        if: ${{ github.event.inputs.apk_url != '' }}
+        run: |
+          echo "new_version=true" >> $GITHUB_ENV
+          echo "version_string=${{ github.event.inputs.version_name }}" >> $GITHUB_ENV
+          echo "version=${{ github.event.inputs.version_code }}" >> $GITHUB_ENV
+          echo "store_version=VersionCode: ${{ github.event.inputs.version_code }}" >> $GITHUB_ENV
+          echo "MANUAL_MODE=true" >> $GITHUB_ENV
+
       - name: Cancel if no new version
         if: ${{ env.new_version == 'false' }}
         uses: andymckay/cancel-action@0.2
 
-      - name: Download new apk
-        if: ${{ env.new_version == 'true' }}
+      - name: Download from Google Play
+        if: ${{ env.new_version == 'true' && github.event.inputs.apk_url == '' }}
         run: |
           ./googleplay -a com.cygames.Shadowverse  -p 2 -v ${{ env.version }} -s
-      
+
+      - name: Download from Manual URL
+        if: ${{ env.new_version == 'true' && github.event.inputs.apk_url != '' }}
+        run: |
+          curl -L "${{ github.event.inputs.apk_url }}" -o com.cygames.Shadowverse.apk
+
       - name: Setup Java JDK
         if: ${{ env.new_version == 'true' }}
         uses: actions/setup-java@v3.3.0
@@ -64,6 +94,7 @@ jobs:
       - name: Decompile apk
         if: ${{ env.new_version == 'true' }}
         run: |
+          # 兼容处理，将下载的文件重命名
           mv *.apk original.apk
           java -jar ./apktool_2.6.1.jar d original.apk
       
@@ -102,11 +133,12 @@ jobs:
       - name: Commit files
         if: ${{ env.new_version == 'true' }}
         run: |
-          echo ${{ env.store_version }} > version
+          # 更新本地 version 文件，防止下次自动运行重复处理相同版本
+          echo "VersionCode: ${{ env.version }}" > version
           git add version
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git commit -m "Version ${{ env.version_string }}"
+          git commit -m "Version ${{ env.version_string }}" || echo "Nothing to commit"
 
       - name: Push changes
         if: ${{ env.new_version == 'true' }}
@@ -122,4 +154,4 @@ jobs:
           name: ShadowverseHD-${{ env.version_string }}
           artifacts: original/dist/Shadowverse-${{ env.version_string }}-signed.apk
           tag: ${{ env.version_string }}
-          body: "Version ${{ env.version_string }}."
+          body: "Version ${{ env.version_string }}. Source: ${{ github.event.inputs.apk_url != '' && 'Manual Upload' || 'Google Play' }}"
