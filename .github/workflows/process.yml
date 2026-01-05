@@ -120,7 +120,7 @@ jobs:
 
       - name: Zipalign and sign apk
         if: ${{ env.new_version == 'true' }}
-        uses: kevin-david/zipalign-sign-android-release@v2
+        uses: kevin-david/zipalign-sign-android-release@v1.1
         with:
           releaseDirectory: original/dist
           alias: ${{ secrets.SIGNING_KEY_ALIAS }}
