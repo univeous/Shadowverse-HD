@@ -90,7 +90,12 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-        
+          
+      - name: Install specific build tools
+        if: ${{ env.new_version == 'true' }}
+        run: |
+          echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "build-tools;32.0.0"        
+
       - name: Decompile apk
         if: ${{ env.new_version == 'true' }}
         run: |
@@ -112,11 +117,6 @@ jobs:
         run: |
           java -jar ./apktool_2.6.1.jar b --use-aapt2 original
           mv original/dist/original.apk original/dist/Shadowverse-${{ env.version_string }}.apk
-      
-      - name: Install specific build tools
-        if: ${{ env.new_version == 'true' }}
-        run: |
-          sdkmanager "build-tools;33.0.0"
 
       - name: Zipalign and sign apk
         if: ${{ env.new_version == 'true' }}
