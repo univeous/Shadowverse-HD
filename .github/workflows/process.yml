@@ -94,9 +94,9 @@ jobs:
         
       - name: Upload artifact
         if: ${{ env.new_version == 'true' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: Shadowverse-${{ env.version_string }}-signed.apk
+          name: Shadowverse-${{ env.version_string }}-signed
           path: original/dist/Shadowverse-${{ env.version_string }}-signed.apk
         
       - name: Commit files
